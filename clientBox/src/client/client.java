@@ -22,7 +22,7 @@ public class client
 			InetAddress ip = InetAddress.getByName("localhost"); 
 	
 			// establish the connection with server port 5056 
-			Socket s = new Socket(ip, 5056); 
+			Socket s = new Socket(ip, 9876); 
 	
 			// obtaining input and out streams 
 			DataInputStream dis = new DataInputStream(s.getInputStream()); 
@@ -47,8 +47,9 @@ public class client
 			{
 				
 				System.out.println(dis.readUTF()); 
+				
 				String tosend = scn.nextLine(); 
-				dos.writeUTF(tosend); 
+				//dos.writeUTF(tosend); 
 				
 				// If client sends exit,close this connection 
 				// and then break from the while loop 
@@ -59,14 +60,14 @@ public class client
 					System.out.println("Connection closed"); 
 					break; 
 				} 
-				
+			
 				// printing date or time as requested by client 
 				String received = dis.readUTF(); 
 				System.out.println(received); 
 			} 
 			
 			// closing resources 
-			scn.close(); 
+			//scn.close(); 
 			dis.close(); 
 			dos.close(); 
 		}catch(Exception e){ 

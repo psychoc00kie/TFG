@@ -4,18 +4,22 @@ package server;
 // Save file as Server.java 
 
 import java.io.*; 
-import java.text.*; 
+//import java.text.*; 
 import java.util.*; 
 import java.net.*; 
 
 // Server class 
 public class Server 
 { 
+	public static Thread t ;
+	public static ServerSocket ss;
+	public static int exit = 0;
+	
 	public static void main(String[] args) throws IOException 
 	{ 
 		// server is listening on port 5056 
-		ServerSocket ss = new ServerSocket(5056); 
-		LinkedList<ClientDB> _clientDB = new LinkedList<ClientDB>();
+		ss = new ServerSocket(9876); 
+		//LinkedList<ClientDB> _clientDB = new LinkedList<ClientDB>();
 		boolean running = true;
 		int clientcount= 0;
 		LinkedList<ClientHandler> _clientList = new LinkedList<ClientHandler>();
@@ -47,12 +51,20 @@ public class Server
 				System.out.println("Assigning new thread for this client"+s.getLocalAddress().getHostAddress()); 
 
 				// create a new thread object 
-				ClientHandler aux = new ClientHandler(clientcount,s, dis, dos); 
+				ClientHandler aux = new ClientHandler(0,clientcount,s, dis, dos); 
 				_clientList.add(aux);
-				Thread t = aux;
+				t = aux;
+				long tid= t.getId();
+				_clientList.getLast().setThreadId(tid);
+				
 
 				// Invoking the start() method 
 				t.start(); 
+				if (exit ==1)
+				{
+					running = false;
+				}
+				
 				
 			} 
 			catch (Exception e){ 
@@ -60,6 +72,13 @@ public class Server
 				e.printStackTrace(); 
 			} 
 		} 
+		t = null;
 		ss.close();
 	} 
+	
+	public void stopThread(Thread t)
+	{
+		t = null;
+	}
+	
 } 

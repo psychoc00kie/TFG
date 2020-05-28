@@ -3,15 +3,23 @@
 
 package client;
 
+
+
 import java.io.*; 
 import java.net.*; 
-import java.util.Scanner; 
+import java.util.Scanner;
+
+import menu.Menu;
+import menu.action;
+
 import java.net.InetAddress;
 
 // Client class  Cada cliente hace referencia a un buzon que se encontrara en las casas de los clientes, estos estan conectados aun servidor ,
 // que les ira proporcionando comandos segun evolucione el proceso de entrega . 
 public class client 
 { 
+	
+	
 	public static void main(String[] args) throws IOException 
 	{ 
 		try
@@ -25,51 +33,41 @@ public class client
 			Socket s = new Socket(ip, 9876); 
 	
 			// obtaining input and out streams 
-			DataInputStream dis = new DataInputStream(s.getInputStream()); 
-			DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
-			
+			ObjectInputStream in = new ObjectInputStream(s.getInputStream()); 
+			ObjectOutputStream out= new ObjectOutputStream(s.getOutputStream());
 			//Sending to the server Box information details to subscribe as a client. 
 			
 			InetAddress machineIp = InetAddress.getLocalHost();
 			System.out.println("this is the machines ip address:"+machineIp.getHostAddress() +"\n");
-			/*
-			String info = machineIp.getHostAddress();
-			System.out.println("enter users name:");
-			info = info + ","+scn.nextLine();
-			System.out.println("enter users country");
-			info = info + ","+scn.nextLine();
-			dos.writeUTF(info);
-			*/
+			
 			
 			// the following loop performs the exchange of 
 			// information between client and client handler 
+			
+			action received = new action();
+			action to_send = new action();
+			Menu _menu = new Menu();
+			
 			while (true) 
 			{
+				received = (action) in.readObject();
 				
-				System.out.println(dis.readUTF()); 
+				if(received.getActionId()<4)
+					break;				
 				
-				String tosend = scn.nextLine(); 
-				//dos.writeUTF(tosend); 
+				to_send = _menu.execute(received);
 				
-				// If client sends exit,close this connection 
-				// and then break from the while loop 
-				if(tosend.equals("Exit")) 
-				{ 
-					System.out.println("Closing this connection : " + s); 
-					s.close(); 
-					System.out.println("Connection closed"); 
-					break; 
-				} 
-			
-				// printing date or time as requested by client 
-				String received = dis.readUTF(); 
-				System.out.println(received); 
+				
+				out.writeObject(to_send);
+				out.flush();
+				
+				
 			} 
 			
 			// closing resources 
 			//scn.close(); 
-			dis.close(); 
-			dos.close(); 
+			in.close();
+			out.close();
 		}catch(Exception e){ 
 			e.printStackTrace(); 
 		} 

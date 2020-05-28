@@ -1,23 +1,13 @@
-package menu;
+package comunication;
 
-import java.io.Serializable;
+public class PacketTransfer {
 
-public class action implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6656534029716592310L;
-	/**
-	 * 
-	 */
-	
 	public int actionId;
 	public String actionData;
 	public boolean successfull;
 	public int errorDataCode;
 	
-	public action(int actionId, String actionData, boolean successfull, int errorDataCode) {
+	public PacketTransfer(int actionId, String actionData, boolean successfull, int errorDataCode) {
 		super();
 		this.actionId = actionId;
 		this.actionData = actionData;
@@ -25,7 +15,7 @@ public class action implements Serializable {
 		this.errorDataCode = errorDataCode;
 	}
 
-	public action() {
+	public PacketTransfer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -61,15 +51,15 @@ public class action implements Serializable {
 	public void setErrorDataCode(int errorDataCode) {
 		this.errorDataCode = errorDataCode;
 	}
-	
+
 	public void emptyPacket() {
 		setActionId(0);
 		setActionData(null);
 		setSuccessfull(false);
 		setErrorDataCode(0);
 	}
-	
 
+	
 	@Override
 	public String toString() {
 		return "PacketTransfer [actionId=" + actionId + ", actionData=" + actionData + ", successfull=" + successfull

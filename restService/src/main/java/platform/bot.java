@@ -1,4 +1,4 @@
-package data;
+package platform;
 
 public class bot extends user {
 

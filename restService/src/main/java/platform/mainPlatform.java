@@ -15,7 +15,7 @@ public class mainPlatform {
 
         // CREAMOS LAS TABLAS DE LA BASE DE DATOS
 
-        LinkedList<platform.client> bddClientes = new LinkedList<platform.client>();
+/*        LinkedList<platform.client> bddClientes = new LinkedList<platform.client>();
         LinkedList<user> bddUsuarios = new LinkedList<user>();
         LinkedList<product> bddProductos = new LinkedList<product>();
         LinkedList<platform.bot> bddBot = new LinkedList<platform.bot>();
@@ -25,12 +25,12 @@ public class mainPlatform {
 
         init(bddClientes, bddUsuarios, bddProductos, bddBot, bddBox, bddEnvios, bddVentas);
 
-        compra(bddVentas, bddProductos, 1, 1, 3);
+        compra(bddVentas, bddProductos, 1, 1, 3);*/
 
 
     }
 
-    public static void init(LinkedList<platform.client> bddClientes, LinkedList<user> bddUsuarios, LinkedList<product> bddProductos, LinkedList<platform.bot> bddBot, LinkedList<box> bddBox, LinkedList<shipment> bddEnvios, LinkedList<platform.purchase> bddVentas) throws SQLException {
+    public  void init(LinkedList<platform.client> bddClientes, LinkedList<user> bddUsuarios, LinkedList<product> bddProductos, LinkedList<platform.bot> bddBot, LinkedList<box> bddBox, LinkedList<shipment> bddEnvios, LinkedList<platform.purchase> bddVentas) throws SQLException {
 
         /*
         LLENAMOS LAS TABLAS CON EL CONTENIDO DE LAS BASES DE DATOS
@@ -196,7 +196,7 @@ public class mainPlatform {
         }
     }
 
-    public static void compra(LinkedList<platform.purchase> bddVentas, LinkedList<product> bddProductos, int idProd, int idClient, int cant) {
+    public  void compra(LinkedList<platform.purchase> bddVentas, LinkedList<product> bddProductos, int idProd, int idClient, int cant) {
         for (int i = 0; i < bddProductos.size(); i++) {
             if (bddProductos.get(i).getId() == idProd) {
                 double total_price = bddProductos.get(i).getPrice() * cant;

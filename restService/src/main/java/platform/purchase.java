@@ -7,16 +7,16 @@ public class purchase {
     int id;
     Date date;
     int _client;
-    int _prouduct;
+    int _product;
     int units;
     double price;
 
-    public purchase(int id, int _client, int _prouduct, int units, double price) {
+    public purchase(int id, int _client, int _product, int units, double price) {
 
         this.id = id;
         this.date = new Date();
         this._client = _client;
-        this._prouduct = _prouduct;
+        this._product = _product;
         this.units = units;
         this.price = price;
     }
@@ -45,12 +45,12 @@ public class purchase {
         this._client = _client;
     }
 
-    public int get_prouduct() {
-        return _prouduct;
+    public int get_product() {
+        return _product;
     }
 
-    public void set_prouduct(int _prouduct) {
-        this._prouduct = _prouduct;
+    public void set_product(int _product) {
+        this._product = _product;
     }
 
     public int getUnits() {
@@ -75,7 +75,7 @@ public class purchase {
                 "id=" + id +
                 ", date=" + date +
                 ", _client=" + _client +
-                ", _prouduct=" + _prouduct +
+                ", _prouduct=" + _product +
                 ", units=" + units +
                 ", price=" + price +
                 '}';

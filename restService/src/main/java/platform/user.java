@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class user {
 
-    int id;             // id for the user
-    String name;
-    String password;
-    int type;           // 0 Admin company usser, 1 company regular user , 2 client , 3 bot, 4 box
+    public int id;             // id for the user
+    public String name;
+    public String password;
+    public int type;           // 0 Admin company usser, 1 company regular user , 2 client , 3 bot, 4 box
 
     public user(int id, String name, String password, int type) {
         this.id = id;

@@ -1,35 +1,39 @@
-package TFG.api.security;
+package TFG.api;
 
-import TFG.api.security.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private String userName;
 
-    public MyUserDetails(User user){
-        this.user = user;
+    public MyUserDetails(String userName){
+        this.userName = userName;
+    }
+
+    public MyUserDetails()
+    {
+
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRoles());
-        return Arrays.asList(authority);
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPassword();
+        return "pass";
     }
 
     @Override
     public String getUsername() {
-        return this.user.getUser_name();
+        return userName;
     }
 
     @Override

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Product Manager</title>
+</head>
+<body>
+<div sec:authorize="hasRole('ROLE_ADMIN')" align="center">
+	<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" />
+	</form>
+
+	<h1>Product Manager</h1>
+	<a href="new">Create New Product</a>
+
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+		<tr>
+			<th>Product ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Stock</th>
+			<th sec:authorize="hasRole('ROLE_ADMIN')">Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="product : ${listProducts}">
+			<td th:text="${product.id}">Product ID</td>
+			<td th:text="${product.name}">Name</td>
+			<td th:text="${product.price}">Brand</td>
+			<td th:text="${product.stock}">Made in</td>
+			<td sec:authorize="hasRole('ROLE_ADMIN')">
+				<a th:href="@{'/edit/' + ${product.id}}">Edit</a>
+				<a th:href="@{'/purchase/' + ${product.id}}">Purchase</a>
+				<a th:href="@{'/delete/' + ${product.id}}">Delete</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div sec:authorize="hasRole('ROLE_CLIENT')" align="center">
+	<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" />
+	</form>
+
+	<h1>Product Manager</h1>
+	<a href="new">Create New Product</a>
+
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+		<tr>
+			<th>Product ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Stock</th>
+			<th sec:authorize="hasRole('ROLE_CLIENT')">Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="product : ${listProducts}">
+			<td th:text="${product.id}">Product ID</td>
+			<td th:text="${product.name}">Name</td>
+			<td th:text="${product.price}">Price</td>
+			<td th:text="${product.stock}">Stock</td>
+			<td sec:authorize="hasRole('ROLE_CLIENT')">
+				<a th:href="@{'/purchase/' + ${product.id}}">Purchase</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div sec:authorize="hasRole('ROLE_BOT')" align="center">
+	<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+		
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	
+	<h1>Product Manager</h1>
+	<a href="new">Create New Product</a>
+	
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>Product ID</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Stock</th>
+				
+				<th sec:authorize="hasRole('ROLE_BOT')">Actions</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${listProducts}">
+				<td th:text="${product.id}">Product ID</td>
+				<td th:text="${product.name}">Name</td>
+				<td th:text="${product.price}">Brand</td>
+				<td th:text="${product.stock}">Made in</td>
+				<td sec:authorize="hasRole('ROLE_BOT')">
+					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a th:href="@{'/delete/' + ${product.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

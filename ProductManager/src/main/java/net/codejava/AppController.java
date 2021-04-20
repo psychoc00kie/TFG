@@ -2,12 +2,12 @@ package net.codejava;
 
 import java.util.List;
 
-import net.codejava.Box.Box;
-import net.codejava.Box.BoxService;
-import net.codejava.Products.Product;
-import net.codejava.Products.ProductService;
-import net.codejava.Purchase.Purchase;
-import net.codejava.Purchase.PurchaseService;
+import net.codejava.Repositories.Box.Box;
+import net.codejava.Repositories.Box.BoxService;
+import net.codejava.Repositories.Products.Product;
+import net.codejava.Repositories.Products.ProductService;
+import net.codejava.Repositories.Purchase.Purchase;
+import net.codejava.Repositories.Purchase.PurchaseService;
 import net.codejava.Security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.constraints.Null;
 
 @Controller
 public class AppController {
@@ -37,20 +35,22 @@ public class AppController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/bot", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/getBoxDeliveries", method = RequestMethod.GET)
 	@ResponseBody
-	public String showBotArea(){
-		System.out.println("test");
-		String username = "null";
+	public List<Purchase> getBoxDeliveries(){
+
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof MyUserDetails) {
-			 username = ((MyUserDetails)principal).getId().toString();
-		} else {
-			 username = principal.toString();
+		List<Purchase> myPurchaseList = purchaseService.listAll();
+		long myID = ((MyUserDetails)principal).getId();
+		for (int i =0; i< myPurchaseList.size() ;i++)
+		{
+			if(myPurchaseList.get(i).getBuyer_id() != myID)
+			{
+				myPurchaseList.remove(i);
+			}
 		}
-
-		return username;
+		return myPurchaseList;
 	}
 	
 	@RequestMapping("/newProduct")
@@ -61,8 +61,6 @@ public class AppController {
 		return "new_product";
 	}
 
-
-	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute("product") Product product) {
 		service.save(product);
@@ -93,13 +91,6 @@ public class AppController {
 		purchaseService.save(purchase);
 
 		return "redirect:/";
-	}
-
-	@RequestMapping("/newPurchase")
-	public String showNewPurchaseForm(Model model) {
-
-
-		return "new_purchase";
 	}
 
 	@RequestMapping("/purchase/{id}")

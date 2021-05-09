@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/edit/**", "/delete/**").hasRole("ADMIN")
 			.antMatchers("/edit/**").hasRole("BOT")
 			.antMatchers("/purchase").hasRole("CLIENT")
+			.antMatchers("/box/**").hasRole("BOX")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin().permitAll()
@@ -52,6 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.logout().permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/403")
+			.and()
+			.httpBasic()
 			;
 	}
 	

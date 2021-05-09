@@ -37,21 +37,7 @@ public class AppController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/getBoxDeliveries", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Purchase> getBoxDeliveries(){
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<Purchase> myPurchaseList = purchaseService.listAll();
-		long myID = ((MyUserDetails)principal).getId();
-		for (int i =0; i< myPurchaseList.size() ;i++)
-		{
-			if(myPurchaseList.get(i).getBuyer_id() != myID)
-			{
-				myPurchaseList.remove(i);
-			}
-		}
-		return myPurchaseList;
-	}
+
 
 	@RequestMapping(value = "/bot", method = RequestMethod.GET)
 	@ResponseBody

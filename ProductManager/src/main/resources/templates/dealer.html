@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dealer Area</title>
+</head>
+<body>
+<div>
+<table border="1" cellpadding="10">
+    <thead>
+    <tr>
+        <th>Product ID</th>
+        <th>Address</th>
+        <th>QR</th>
+        <th>Zoom QR</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="delivery : ${deliveries}">
+        <td th:text="${delivery.product_id}">Product ID</td>
+        <td th:text="${delivery.delivery_address}">Address</td>
+        <td>
+            <img src="/dealer/qr" width="200" height="200">
+        </td>
+        <td>
+            <form method="get" action="/dealer/qr">
+                <button type="submit">QR Zoom</button>
+            </form>
+        </td>
+
+
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>

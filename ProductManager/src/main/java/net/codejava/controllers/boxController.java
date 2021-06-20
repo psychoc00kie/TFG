@@ -1,4 +1,4 @@
-package net.codejava;
+package net.codejava.controllers;
 
 import net.codejava.Box.BoxService;
 import net.codejava.Products.ProductService;

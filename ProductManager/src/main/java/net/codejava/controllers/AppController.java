@@ -1,4 +1,4 @@
-package net.codejava;
+package net.codejava.controllers;
 
 import java.util.List;
 

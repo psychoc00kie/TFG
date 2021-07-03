@@ -1,6 +1,8 @@
 package net.codejava.controllers;
 
 import net.codejava.Box.BoxService;
+import net.codejava.Delivery.Delivery;
+import net.codejava.Delivery.DeliveryService;
 import net.codejava.Products.ProductService;
 import net.codejava.Purchase.Purchase;
 import net.codejava.Purchase.PurchaseService;
@@ -8,10 +10,7 @@ import net.codejava.Security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +55,16 @@ public class boxController {
         List<Purchase> allPurchases = purchaseService.listAll();
 
         return allPurchases;
+    }
+
+    @Autowired
+    private DeliveryService deliveryService;
+
+    @RequestMapping(value = "deliver", method = RequestMethod.POST)
+    @ResponseBody
+    Delivery newEmployee(@RequestBody Delivery delivery) {
+
+        deliveryService.save(delivery);
+        return delivery;
     }
 }
